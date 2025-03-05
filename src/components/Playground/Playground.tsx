@@ -1,13 +1,18 @@
-import { current } from "@reduxjs/toolkit"
+import { useState, useEffect, useRef } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 
-import { setCurrentStep, setSteps, clearSteps } from "./store/slices"
-import { useState, useEffect, useRef } from "react"
+import {
+  setCurrentStep,
+  setSteps,
+  clearSteps,
+  setUnsucces,
+} from "./store/slices"
 
-import { INTERVAL_TIME, ARR_MAP_CODES } from "./constants"
+import { INTERVAL_TIME } from "./constants"
 
 import Controls from "./components/Controls"
 import RandomKeys from "./components/RandomKeys"
+import KeyPressed from "./components/KeyPressed"
 
 const Playground: React.FC = () => {
   const state = useAppSelector(state => state.playground)
@@ -20,6 +25,7 @@ const Playground: React.FC = () => {
   useEffect(() => {
     if (isTimerActive) {
       refreshIntervalId.current = setInterval(() => {
+        dispatch(setUnsucces())
         dispatch(setCurrentStep())
         dispatch(setSteps())
       }, INTERVAL_TIME)
@@ -28,7 +34,7 @@ const Playground: React.FC = () => {
     }
 
     return () => {
-      dispatch(clearSteps())
+      //dispatch(clearSteps())
       clearInterval(refreshIntervalId.current as NodeJS.Timeout)
     }
   }, [isTimerActive, dispatch])
@@ -36,12 +42,12 @@ const Playground: React.FC = () => {
   return (
     <div>
       <h1>{state.currentStep}</h1>
-      <button onClick={() => dispatch(setSteps())}>Change step</button>
       <Controls
         isTimerActive={isTimerActive}
         setIsTimerActive={setIsTimerActive}
       />
       <RandomKeys isTimerActive={isTimerActive} />
+      <KeyPressed isTimerActive={isTimerActive} />
     </div>
   )
 }

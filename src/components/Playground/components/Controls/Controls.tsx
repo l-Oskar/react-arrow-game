@@ -14,7 +14,7 @@ const Controls: React.FC<IControlsProps> = props => {
         Play
       </button>
       <button onClick={() => setIsTimerActive(false)} disabled={!isTimerActive}>
-        Stop
+        Pause
       </button>
     </div>
   )
