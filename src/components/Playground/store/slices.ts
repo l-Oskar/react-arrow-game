@@ -7,8 +7,8 @@ import { ARR_MAP_CODES } from "../constants"
 export const initialState: IPlaygroundState = {
   currentStep: 0,
   steps: [],
-  totalSuccesful: 0,
-  totalUnsuccesful: 0,
+  totalSuccessful: 0,
+  totalUnsuccessful: 0,
 }
 
 export const playgroundSlicer = createSlice({
@@ -25,46 +25,44 @@ export const playgroundSlicer = createSlice({
         step: state.currentStep,
         currentValue: ARR_MAP_CODES[randomKeys],
         enteredValue: null,
-        succes: null,
+        success: null,
       })
     },
 
-    clearSteps: state => {
-      state.steps = []
-    },
+    clearSteps: () => initialState,
 
     setEnteredValue: (state, action) => {
       if (state.steps.length) {
         const step = state.steps[state.currentStep - 1]
-        const isSucces = step.currentValue === action.payload
+        const isSuccess = step.currentValue === action.payload
 
         if (step.enteredValue == null) {
           state.steps[state.currentStep - 1] = {
             ...step,
             enteredValue: action.payload,
-            succes: isSucces,
+            success: isSuccess,
           }
         }
-        if (isSucces) {
-          state.totalSuccesful += 1
+        if (isSuccess) {
+          state.totalSuccessful += 1
         } else {
-          state.totalUnsuccesful += 1
-          state.totalSuccesful = 0
+          state.totalUnsuccessful += 1
+          state.totalSuccessful = 0
         }
       }
     },
 
-    setUnsucces: state => {
+    setUnsuccess: state => {
       if (state.steps.length) {
         const step = state.steps[state.currentStep - 1]
 
         if (step.enteredValue == null) {
-          state.totalUnsuccesful += 1
-          state.totalSuccesful = 0
+          state.totalUnsuccessful += 1
+          state.totalSuccessful = 0
 
           state.steps[state.currentStep - 1] = {
             ...step,
-            succes: false,
+            success: false,
           }
         }
       }
@@ -77,7 +75,7 @@ export const {
   setSteps,
   clearSteps,
   setEnteredValue,
-  setUnsucces,
+  setUnsuccess,
 } = playgroundSlicer.actions
 
 export default playgroundSlicer.reducer
