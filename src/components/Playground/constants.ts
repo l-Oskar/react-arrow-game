@@ -1,11 +1,18 @@
-import { IMapArrowCodes, IEndGameConditions } from "./types"
-export const INTERVAL_TIME: number = 1000
+import { IMapArrowCodes, IEndGameConditions, IIntervalTime } from "./types"
+
+//export const INTERVAL_TIME: number = 500
+
+export const INTERVAL_TIME: IIntervalTime = {
+  easy: 2000,
+  normal: 1000,
+  hard: 500,
+}
 
 export const MAP_ARROW_CODES: IMapArrowCodes = {
-  ArrowUp: "⬆️",
-  ArrowDown: "⬇️",
-  ArrowLeft: "⬅️",
-  ArrowRight: "➡️",
+  ArrowUp: "⬆︎",
+  ArrowDown: "⬇︎",
+  ArrowLeft: "⬅︎",
+  ArrowRight: "➡︎",
 }
 
 export const ARR_MAP_CODES = Object.keys(MAP_ARROW_CODES)

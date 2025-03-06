@@ -1,6 +1,9 @@
 import { useAppSelector } from "../../../../app/hooks"
+import TypographyHeader from "../../../UI/TypographyHeader"
 import RandomArrows from "./RandomArrows"
 import WelcomeText from "./WelcomeText"
+
+import styles from "./RandomKeys.module.css"
 
 export interface IRandomKeysProps {
   isTimerActive: boolean
@@ -13,7 +16,7 @@ const RandomKeys: React.FC<IRandomKeysProps> = props => {
 
   return (
     <div>
-      <h1>Random keys</h1>
+      <TypographyHeader>Random keys</TypographyHeader>
 
       {state.steps.length === 0 ? (
         <WelcomeText isTimerActive={isTimerActive} />

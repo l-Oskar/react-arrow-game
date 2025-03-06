@@ -1,9 +1,9 @@
 import Playground from "./components/Playground"
+import TypographyHeader from "./components/UI/TypographyHeader"
 
 const App: React.FC = () => {
   return (
     <>
-      <h1>App</h1>
       <Playground />
     </>
   )

@@ -15,6 +15,9 @@ import RandomKeys from "./components/RandomKeys"
 import KeyPressed from "./components/KeyPressed"
 import Score from "./components/Score"
 import Modal from "./components/Modal"
+import Description from "./components/Description"
+
+import styles from "./Playground.module.css"
 
 const Playground: React.FC = () => {
   const state = useAppSelector(state => state.playground)
@@ -23,8 +26,13 @@ const Playground: React.FC = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false)
   const [isSuccessEndGame, setIsSuccessEndGame] = useState<boolean>(false)
   const [isTimerActive, setIsTimerActive] = useState<boolean>(false)
+  const [timer, setTimer] = useState<number>(INTERVAL_TIME.normal)
 
   const refreshIntervalId = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const changeTimer = (time: number) => {
+    setTimer(time)
+  }
 
   useEffect(() => {
     if (isTimerActive) {
@@ -32,7 +40,7 @@ const Playground: React.FC = () => {
         dispatch(setUnsuccess())
         dispatch(setCurrentStep())
         dispatch(setSteps())
-      }, INTERVAL_TIME)
+      }, timer)
     } else {
       clearInterval(refreshIntervalId.current as NodeJS.Timeout)
     }
@@ -61,16 +69,22 @@ const Playground: React.FC = () => {
   }, [state.totalSuccessful, state.totalUnsuccessful])
 
   return (
-    <div>
-      <h1>{state.currentStep}</h1>
-      <Controls
-        isTimerActive={isTimerActive}
-        setIsTimerActive={setIsTimerActive}
-      />
-      <RandomKeys isTimerActive={isTimerActive} />
-      <KeyPressed isTimerActive={isTimerActive} />
-      <Score />
+    <div className={styles.container}>
+      <div className={styles.column}>
+        <RandomKeys isTimerActive={isTimerActive} />
+        <KeyPressed isTimerActive={isTimerActive} />
+        <Score />
+      </div>
+      <div className={styles.column}>
+        <Description />
 
+        <Controls
+          isTimerActive={isTimerActive}
+          setIsTimerActive={setIsTimerActive}
+          changeTimer={changeTimer}
+          timer={timer}
+        />
+      </div>
       {isShowModal && (
         <Modal
           setIsShowModal={setIsShowModal}

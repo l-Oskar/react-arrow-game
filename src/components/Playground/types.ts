@@ -9,3 +9,9 @@ export interface IEndGameConditions {
   SUCCESS_COUNT: number
   UNSUCCESS_COUNT: number
 }
+
+export interface IIntervalTime {
+  easy: number
+  normal: number
+  hard: number
+}
